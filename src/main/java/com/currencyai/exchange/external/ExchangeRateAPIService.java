@@ -18,9 +18,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ExchangeRateAPIService {
 
-    private static final String FRANKFURTER_API_URL =
-            "https://api.frankfurter.dev/v2";
-
     private final RestClient restClient;
 
     /**
@@ -49,7 +46,7 @@ public class ExchangeRateAPIService {
                 .toUriString();
 
         try {
-            log.info("Calling Frankfurter API with URI: {}{}", FRANKFURTER_API_URL, uri);
+            log.info("Calling Frankfurter API with URI: {}", uri);
             ExchangeRateResponse[] response = restClient.get()
                 .uri(uri)
                 .retrieve()
