@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class OllamaRunner {
+public class ApplicationRunner {
 
     private final LocalModelAIService localModelAIService;
 

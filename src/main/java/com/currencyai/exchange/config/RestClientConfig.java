@@ -8,13 +8,12 @@ import org.springframework.web.client.RestClient;
 @Configuration
 public class RestClientConfig {
 
-    private static final String FRANKFURTER_API_URL =
-            "https://api.frankfurter.dev/v2";
+    @Bean("frankfurterRestClient")
+    public RestClient frankfurterRestClient(
+            @Value("${frankfurter.base-url}") String baseUrl) {
 
-    @Bean
-    public RestClient restClient() {
         return RestClient.builder()
-                .baseUrl(FRANKFURTER_API_URL)
+                .baseUrl(baseUrl)
                 .build();
     }
 

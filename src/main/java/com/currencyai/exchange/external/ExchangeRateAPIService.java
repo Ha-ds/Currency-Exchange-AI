@@ -1,9 +1,10 @@
 package com.currencyai.exchange.external;
 
-import com.currencyai.exchange.dto.ExchangeRateResponse;
-import com.currencyai.exchange.dto.HistoricalRateRequest;
+import com.currencyai.exchange.dto.ExchangeRateResponseDto;
+import com.currencyai.exchange.dto.HistoricalRateRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClient;
@@ -18,14 +19,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ExchangeRateAPIService {
 
+    @Qualifier("frankfurterRestClient")
     private final RestClient restClient;
 
     /**
      * This method retrieves historical exchange rates for the requested currency
      * pair and date range from the FrankfurterAPI.
      */
-    public List<ExchangeRateResponse> getHistoricalRates(
-            HistoricalRateRequest request) {
+    public List<ExchangeRateResponseDto> getHistoricalRates(
+            HistoricalRateRequestDto request) {
 
         log.info(
                 "Fetching historical exchange rates: {} to {}, from {} to {}",
@@ -47,10 +49,10 @@ public class ExchangeRateAPIService {
 
         try {
             log.info("Calling Frankfurter API with URI: {}", uri);
-            ExchangeRateResponse[] response = restClient.get()
+            ExchangeRateResponseDto[] response = restClient.get()
                 .uri(uri)
                 .retrieve()
-                .body(ExchangeRateResponse[].class);
+                .body(ExchangeRateResponseDto[].class);
 
             log.info("Received response from Frankfurter API: {}", Arrays.toString(response));
             return response == null ? List.of() : Arrays.asList(response);

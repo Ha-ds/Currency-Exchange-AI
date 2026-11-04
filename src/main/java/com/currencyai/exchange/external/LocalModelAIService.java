@@ -1,7 +1,7 @@
 package com.currencyai.exchange.external;
 
-import com.currencyai.exchange.dto.OllamaRequest;
-import com.currencyai.exchange.dto.OllamaResponse;
+import com.currencyai.exchange.dto.OllamaRequestDto;
+import com.currencyai.exchange.dto.OllamaResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,6 +14,7 @@ import org.springframework.web.client.RestClientResponseException;
 @Slf4j
 public class LocalModelAIService {
 
+    @Qualifier("ollamaRestClient")
     private final RestClient restClient;
     private final String model;
 
@@ -33,14 +34,14 @@ public class LocalModelAIService {
 
         log.info("Sending question to Ollama model: {}", model);
         try {
-            OllamaRequest request =
-                    new OllamaRequest(model, question, false);
+            OllamaRequestDto request =
+                    new OllamaRequestDto(model, question, false);
 
-            OllamaResponse response = restClient.post()
+            OllamaResponseDto response = restClient.post()
                     .uri("/api/generate")
                     .body(request)
                     .retrieve()
-                    .body(OllamaResponse.class);
+                    .body(OllamaResponseDto.class);
 
             if (response == null || response.response() == null) {
                 throw new IllegalStateException(
@@ -63,6 +64,4 @@ public class LocalModelAIService {
                     "Could not connect to Ollama. Check whether it is running.", resourceAccessException);
         }
     }
-
-
 }
