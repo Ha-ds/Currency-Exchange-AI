@@ -26,4 +26,11 @@ public class ExchangeRateController {
         return currencyExchangeAIService.getHistoricalRates(request);
 
     }
+
+    @PostMapping("/analyze")
+    public String analyze(
+            @ Valid @RequestBody HistoricalRateRequestDto request) {
+
+        return currencyExchangeAIService.analyze(request);
+    }
 }
