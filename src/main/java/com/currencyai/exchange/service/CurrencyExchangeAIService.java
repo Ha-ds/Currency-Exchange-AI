@@ -1,7 +1,7 @@
 package com.currencyai.exchange.service;
 
-import com.currencyai.exchange.dto.ExchangeRateResponse;
-import com.currencyai.exchange.dto.HistoricalRateRequest;
+import com.currencyai.exchange.dto.ExchangeRateResponseDto;
+import com.currencyai.exchange.dto.HistoricalRateRequestDto;
 import com.currencyai.exchange.external.ExchangeRateAPIService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,8 +20,8 @@ public class CurrencyExchangeAIService {
      * Retrieves historical exchange rates for the requested currency pair and date range.
      * Calls {@link ExchangeRateAPIService} to get the response.
      */
-    public List<ExchangeRateResponse> getHistoricalRates(
-            HistoricalRateRequest request) {
+    public List<ExchangeRateResponseDto> getHistoricalRates(
+            HistoricalRateRequestDto request) {
 
         log.info("Getting historical rates for {} to {}", request.base(), request.quote());
         return exchangeRateAPIService.getHistoricalRates(request);

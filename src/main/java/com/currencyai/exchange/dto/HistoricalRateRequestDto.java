@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Pattern;
 
 import java.time.LocalDate;
 
-public record HistoricalRateRequest(
+public record HistoricalRateRequestDto(
 
         @NotBlank(message = "Base currency is required")
         @Pattern(regexp = "^[A-Z]{3}$",
