@@ -1,9 +1,11 @@
 package com.currencyai.exchange.constants;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class CurrencyExchangeAIPromptConstants {
 
-    private CurrencyExchangeAIPromptConstants() {
-    }
 
     public static final String HISTORICAL_RATE_ANALYSIS_PROMPT = """
             You are a currency exchange analysis assistant.

@@ -26,7 +26,7 @@ public class RestClientConfig {
             @Value("${ollama.base-url:http://localhost:11434}") String baseUrl) {
 
         HttpClient httpClient = HttpClient.create()
-                .responseTimeout(Duration.ofMinutes(30));
+                .responseTimeout(Duration.ofSeconds(30));
 
         return RestClient.builder()
                 .baseUrl(baseUrl)
