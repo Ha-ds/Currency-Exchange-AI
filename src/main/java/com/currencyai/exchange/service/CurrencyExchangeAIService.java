@@ -94,6 +94,6 @@ public class CurrencyExchangeAIService {
                 historicalRequest.quote());
 
         return response;
-
     }
+
 }
