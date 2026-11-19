@@ -1,5 +1,6 @@
 package com.currencyai.exchange.controller;
 
+import com.currencyai.exchange.dto.CurrencyExchangePromptRequestDto;
 import com.currencyai.exchange.dto.ExchangeRateResponseDto;
 import com.currencyai.exchange.dto.HistoricalRateRequestDto;
 import com.currencyai.exchange.service.CurrencyExchangeAIService;
@@ -29,8 +30,15 @@ public class ExchangeRateController {
 
     @PostMapping("/analyze")
     public String analyze(
-            @ Valid @RequestBody HistoricalRateRequestDto request) {
+            @Valid @RequestBody HistoricalRateRequestDto request) {
 
         return currencyExchangeAIService.analyze(request);
+    }
+
+    @PostMapping("/prompt")
+    public String prompt(
+            @Valid @RequestBody CurrencyExchangePromptRequestDto request) {
+
+        return currencyExchangeAIService.prompt(request);
     }
 }

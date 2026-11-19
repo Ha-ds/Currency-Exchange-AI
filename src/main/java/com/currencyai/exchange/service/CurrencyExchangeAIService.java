@@ -1,5 +1,6 @@
 package com.currencyai.exchange.service;
 
+import com.currencyai.exchange.dto.CurrencyExchangePromptRequestDto;
 import com.currencyai.exchange.dto.ExchangeRateResponseDto;
 import com.currencyai.exchange.dto.HistoricalRateRequestDto;
 import com.currencyai.exchange.external.ExchangeRateAPIService;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.currencyai.exchange.constants.CurrencyExchangeAIPromptConstants.EXCHANGE_RATE_QUESTION_PROMPT;
 import static com.currencyai.exchange.constants.CurrencyExchangeAIPromptConstants.HISTORICAL_RATE_ANALYSIS_PROMPT;
 
 @Service
@@ -57,6 +59,41 @@ public class CurrencyExchangeAIService {
                 request.base(), request.quote());
 
         return analysis;
+
+    }
+
+    /**
+     *This method processes a user's question about
+     * the retrieved historical exchange rates.
+     */
+    public String prompt(CurrencyExchangePromptRequestDto request) {
+
+        HistoricalRateRequestDto historicalRequest =
+                request.historicalRateRequest();
+
+        log.info("Processing AI question for {} to {}",
+                historicalRequest.base(),
+                historicalRequest.quote());
+
+        List<ExchangeRateResponseDto> rates =
+                exchangeRateAPIService.getHistoricalRates(historicalRequest);
+
+        String prompt = EXCHANGE_RATE_QUESTION_PROMPT.formatted(
+                historicalRequest.base(),
+                historicalRequest.quote(),
+                historicalRequest.from(),
+                historicalRequest.to(),
+                rates,
+                request.question()
+        );
+
+        String response = localModelAIService.ask(prompt);
+
+        log.info("Successfully processed AI question for {} to {}",
+                historicalRequest.base(),
+                historicalRequest.quote());
+
+        return response;
 
     }
 }
